@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Perform the question insertion in the database
     $labID = $_SESSION['labid'];
-    $userID = $_SESSION['userID'];
+    $userID = $_SESSION['userid'];
 
     // Add the necessary SQL query for inserting the question into the database
     $sql = "INSERT INTO Question (LabID, QuestionText, DifficultyLevel, QuestionUploadDate, submissiondate)
