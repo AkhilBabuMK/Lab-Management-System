@@ -172,11 +172,11 @@ if (isset($_SESSION['labid'])) {
         echo "<form method=\"POST\" action=\"deletequestion.php\">";
         echo "<input type=\"hidden\" name=\"questionID\" value=\"" . $rowQuestion['QuestionID'] . "\">";
         echo "<button type=\"submit\" class=\"btn btn-danger\">Delete Question</button>";
-        echo "</form>";
-    
+        
+        echo "&nbsp&nbsp&nbsp";
         // Add edit button
         echo "<a href=\"addquestion.php?editquestionid=" . $rowQuestion['QuestionID'] . "\" class=\"btn btn-warning\">Edit Question</a>";
-    
+        echo "</form>";
         // Add more details or formatting as needed
         echo "</div>";
         echo "</div>";
