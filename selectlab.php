@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo "current lab is " ,$currentLab;
 
     // Fetch questions associated with the selected lab
-    $sqlQuestions = "SELECT * FROM Question WHERE LabID = $currentLab";
+    $sqlQuestions = "SELECT * FROM Question WHERE LabID = $currentLab ORDER BY QuestionNumber ASC";
     $resultQuestions = $conn->query($sqlQuestions);
 
     if (!$resultQuestions) {
@@ -167,17 +167,21 @@ if (isset($_SESSION['labid'])) {
         echo "<h5 class=\"card-title\">Question ID: " . $rowQuestion['QuestionNumber'] . "</h5>";
         echo "<p class=\"card-text\">Question Text: " . $rowQuestion['QuestionText'] . "</p>";
         echo "<p class=\"card-text\">Difficulty Level: " . $rowQuestion['DifficultyLevel'] . "</p>";
-
+    
         // Add delete button
         echo "<form method=\"POST\" action=\"deletequestion.php\">";
         echo "<input type=\"hidden\" name=\"questionID\" value=\"" . $rowQuestion['QuestionID'] . "\">";
-        echo "<button type=\"submit\" class=\"btn btn-danger\">Delete</button>";
+        echo "<button type=\"submit\" class=\"btn btn-danger\">Delete Question</button>";
         echo "</form>";
-
+    
+        // Add edit button
+        echo "<a href=\"addquestion.php?editquestionid=" . $rowQuestion['QuestionID'] . "\" class=\"btn btn-warning\">Edit Question</a>";
+    
         // Add more details or formatting as needed
         echo "</div>";
         echo "</div>";
     }
+    
 
     echo "</div>";
 }
