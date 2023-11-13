@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve question information from the form
     $questionText = $_POST['questionText'];
     $difficultyLevel = $_POST['difficultyLevel'];
+    $questionNumber = $_POST['questionNumber']; // Assuming the input field in the form is named 'questionNumber'
 
     // Validate and sanitize input as needed
 
@@ -38,12 +39,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userID = $_SESSION['userid'];
 
     // Add the necessary SQL query for inserting the question into the database
-    $sql = "INSERT INTO Question (LabID, QuestionText, DifficultyLevel, QuestionUploadDate, submissiondate)
-            VALUES ('$labID', '$questionText', '$difficultyLevel', NOW(), NOW())";
+    $sql = "INSERT INTO Question (LabID, QuestionNumber, QuestionText, DifficultyLevel, QuestionUploadDate, submissiondate)
+            VALUES ('$labID', '$questionNumber', '$questionText', '$difficultyLevel', NOW(), NOW())";
 
     // Execute the query
     if ($conn->query($sql) === TRUE) {
         echo '<div class="container mt-5 alert alert-success">Question added successfully!</div>';
+
+        // Redirect to selectlab.php after successful submission
+        header("Location: selectlab.php");
+        exit();
     } else {
         echo '<div class="container mt-5 alert alert-danger">Error: ' . $sql . '<br>' . $conn->error . '</div>';
     }
@@ -73,6 +78,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="form-group">
             <label for="difficultyLevel">Difficulty Level:</label>
             <input type="text" class="form-control" name="difficultyLevel" required>
+        </div>
+
+        <div class="form-group">
+            <label for="questionNumber">Question Number:</label>
+            <input type="text" class="form-control" name="questionNumber" required>
         </div>
 
         <!-- Add other form fields as needed -->

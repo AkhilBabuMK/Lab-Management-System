@@ -100,57 +100,94 @@ if ($result) {
     <title>Select Lab</title>
     <!-- Include Bootstrap CSS link or CDN here -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        .card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
 
-<div class= "container mt-5">
 
-    <h2>Select a Lab</h2>
+<div class="container">
 
-    <!-- Form to select a lab -->
+    <h2 class="mb-4">Select a Lab</h2>
+
+    <!-- Add Question button -->
+    <a href="addquestion.php" class="btn btn-primary mb-3">Add Question</a>
+
     <form method="POST" action="selectlab.php">
-        <!-- Your code to fetch and display available labs as options in a dropdown -->
-        <!-- Example: -->
-        <label for="labSelect">Select Lab:</label>
-        <select name="selectedLab" id="labSelect" required>
-            <?php
-            // Use the stored LabIDs to display lab options
-            foreach ($labIDs as $labID) {
-                echo "<option value=\"$labID\">Lab $labID</option>";
-            }
-            ?>
-        </select>
+        <div class="form-group">
+            <label for="labSelect">Select Lab:</label>
+            <select class="form-control" name="selectedLab" id="labSelect" required>
+                <?php
+                // Use the stored LabIDs to display lab options
+                foreach ($labIDs as $labID) {
+                    echo "<option value=\"$labID\">Lab $labID</option>";
+                }
+                ?>
+            </select>
+        </div>
 
-        <button type="submit">Select Lab</button>
+        <button type="submit" class="btn btn-primary">Select Lab</button>
     </form>
 
-    <?php
-    // Display questions only if the lab is selected
-    if (isset($_SESSION['labid'])) {
-        echo "<div class=\"mt-5\">";
-        echo "<h2>Questions for the Selected Lab</h2>";
+   
+<?php
+// Display questions only if the lab is selected
+if (isset($_SESSION['labid'])) {
+    echo "<div class=\"mt-5\">";
+    echo "<h2>Questions for the Selected Lab</h2>";
 
-        while ($rowQuestion = $resultQuestions->fetch_assoc()) {
-            echo "<div class=\"card mt-3\">";
-            echo "<div class=\"card-body\">";
-            echo "<h5 class=\"card-title\">Question ID: " . $rowQuestion['QuestionID'] . "</h5>";
-            echo "<p class=\"card-text\">Question Text: " . $rowQuestion['QuestionText'] . "</p>";
-            echo "<p class=\"card-text\">Difficulty Level: " . $rowQuestion['DifficultyLevel'] . "</p>";
-            // Add more details or formatting as needed
-            echo "</div>";
-            echo "</div>";
-        }
+    while ($rowQuestion = $resultQuestions->fetch_assoc()) {
+        echo "<div class=\"card mt-3\">";
+        echo "<div class=\"card-body\">";
+        echo "<h5 class=\"card-title\">Question ID: " . $rowQuestion['QuestionNumber'] . "</h5>";
+        echo "<p class=\"card-text\">Question Text: " . $rowQuestion['QuestionText'] . "</p>";
+        echo "<p class=\"card-text\">Difficulty Level: " . $rowQuestion['DifficultyLevel'] . "</p>";
 
+        // Add delete button
+        echo "<form method=\"POST\" action=\"deletequestion.php\">";
+        echo "<input type=\"hidden\" name=\"questionID\" value=\"" . $rowQuestion['QuestionID'] . "\">";
+        echo "<button type=\"submit\" class=\"btn btn-danger\">Delete</button>";
+        echo "</form>";
+
+        // Add more details or formatting as needed
+        echo "</div>";
         echo "</div>";
     }
-    ?>
+
+    echo "</div>";
+}
+?>
 </div>
 
 <!-- Include Bootstrap JS and jQuery CDN links here if needed -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 
 </body>
 </html>
