@@ -3,10 +3,7 @@ include('header.php');
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    
-
     // Retrieve username and password from the form
-    
     $username = $_POST['username'];
     $password = $_POST['password'];
 
@@ -24,14 +21,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             session_start();
 
             // Store user information in session variables
-             $_SESSION['userid'] = $row['UserID'];
+            $_SESSION['userid'] = $row['UserID'];
             $_SESSION['username'] = $row['Username'];
             $_SESSION['fullname'] = $row['FullName'];
             $_SESSION['role'] = $row['Role'];
 
-            // Redirect to a welcome page or dashboard
-            header("Location: welcome.php");
-            exit();
+            // Redirect based on user role
+            switch ($_SESSION['role']) {
+                case 'Teacher':
+                    // Redirect teacher to select lab.php
+                    header("Location: selectlab.php");
+                    exit();
+                    break;
+                case 'Student':
+                    // Redirect student to studentprofile.php
+                    header("Location: student_profile.php");
+                    exit();
+                    break;
+                case 'Admin':
+                    // Redirect admin to registerlab.php
+                    header("Location: registrationlab.php");
+                    exit();
+                    break;
+                default:
+                    // Handle other roles or unexpected cases
+                    echo '<div class="container mt-5 alert alert-danger">Unknown user role.</div>';
+                    break;
+            }
         } else {
             echo '<div class="container mt-5 alert alert-danger">Invalid password.</div>';
         }
@@ -46,4 +62,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // Include footer.php
 include('footer.php');
 ?>
-

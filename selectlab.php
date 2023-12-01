@@ -136,7 +136,7 @@ if ($result) {
     <h2 class="mb-4">Select a Lab</h2>
 
     <!-- Add Question button -->
-    <a href="addquestion.php" class="btn btn-primary mb-3">Add Question</a>
+    
 
     <form method="POST" action="selectlab.php">
         <div class="form-group">
@@ -152,6 +152,7 @@ if ($result) {
         </div>
 
         <button type="submit" class="btn btn-primary">Select Lab</button>
+        <a href="addquestion.php" class="btn btn-primary">Add Question</a>
     </form>
 
    
