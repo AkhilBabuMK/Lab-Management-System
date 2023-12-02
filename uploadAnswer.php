@@ -30,12 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Get the contents of the uploaded file
         $answerText = file_get_contents($_FILES['answerUpload']['tmp_name']);
 
-        // Display file contents for debugging (remove this in production)
-        var_dump($answerText);
-
         // Store the contents in the database
-        $sql = "INSERT INTO Answer (QuestionID, UserID, AnswerText, submissionDate, FileUpload, uploadDate, Status, Feedback)
-                VALUES (?, ?, ?, CURRENT_DATE(), NULL, CURRENT_DATE(), NULL, NULL)";
+        $sql = "INSERT INTO Answer (QuestionID, UserID, AnswerText, submissionDate, FileUpload, uploadDate, Status1, Feedback)
+                VALUES (?, ?, ?, CURRENT_DATE(), NULL, CURRENT_DATE(), 'Pending', NULL)";
 
         // Use a prepared statement to prevent SQL injection
         $stmt = $conn->prepare($sql);
