@@ -9,6 +9,19 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Teacher') {
     exit();
 }
 
+// Get the teacher's ID
+$teacherID = $_SESSION['userid'];
+
+// Fetch the list of labs assigned to the teacher
+$sqlAssignedLabs = "SELECT LabID FROM Lab WHERE TeacherID = $teacherID";
+$resultAssignedLabs = $conn->query($sqlAssignedLabs);
+
+// Create an array to store assigned lab IDs
+$assignedLabIDs = array();
+while ($rowAssignedLab = $resultAssignedLabs->fetch_assoc()) {
+    $assignedLabIDs[] = $rowAssignedLab['LabID'];
+}
+
 // Fetch the list of students
 $sqlStudents = "SELECT * FROM Users WHERE Role = 'Student'";
 $resultStudents = $conn->query($sqlStudents);
@@ -42,8 +55,11 @@ $resultStudents = $conn->query($sqlStudents);
             echo "<h5 class='card-title'>Student ID: $studentID</h5>";
             echo "<p class='card-text'>Student Name: $studentFullName</p>";
 
-            // Fetch and display answers for this student
-            $sqlAnswers = "SELECT * FROM Answer WHERE UserID = $studentID";
+            // Fetch and display answers for this student and assigned labs
+            $sqlAnswers = "SELECT * FROM Answer 
+                           WHERE UserID = $studentID 
+                           AND LabID IN (" . implode(',', $assignedLabIDs) . ")
+                           AND TeacherID = $teacherID";
             $resultAnswers = $conn->query($sqlAnswers);
 
             if ($resultAnswers === false) {
@@ -112,7 +128,7 @@ $resultStudents = $conn->query($sqlStudents);
                         echo "</div>";
                     }
                 } else {
-                    echo "<p>No answers available for this student.</p>";
+                    echo "<p>No answers available for this student in the assigned labs.</p>";
                 }
             }
 
