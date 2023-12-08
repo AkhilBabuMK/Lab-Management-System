@@ -113,11 +113,13 @@ if (isset($_GET['editquestionid'])) {
             <label for="questionNumber">Question Number:</label>
             <input type="text" class="form-control" name="questionNumber" value="<?php echo isset($editQuestionNumber) ? $editQuestionNumber : ''; ?>" required>
         </div>
-
         <!-- Add other form fields as needed -->
 
         <button type="submit" class="btn btn-primary"><?php echo isset($_GET['editquestionid']) ? 'Update' : 'Submit'; ?> Question</button>
     </form>
+</div>
+<div style="height: 360px;">
+    
 </div>
 
 <!-- Include any necessary JavaScript scripts or Bootstrap JS CDN links here -->

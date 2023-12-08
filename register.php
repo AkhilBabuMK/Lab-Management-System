@@ -29,9 +29,17 @@
             <input type="text" class="form-control" name="contactnumber" required>
         </div>
 
+        <div class="form-group">
+            <label for="role">Role:</label>
+            <select class="form-control" name="role" required>
+                <option value="Student">Student</option>
+                <option value="Teacher">Teacher</option>
+                <option value="Admin">Admin</option>
+            </select>
+        </div>
+
         <button type="submit" class="btn btn-primary">Register</button>
     </form>
 </div>
 
 <?php include('footer.php'); ?>
-
