@@ -44,10 +44,9 @@ if (isset($_SESSION['userid'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab Management System</title>
-    <!-- Add your stylesheet links, meta tags, or other head elements here -->
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Add your JavaScript links or other head elements here -->
-    <!-- For example, you can add Bootstrap's JavaScript and Popper.js -->
+    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -73,9 +72,9 @@ if (isset($_SESSION['userid'])) {
 
 
 <main>
-    <!-- Your main content goes here -->
+    
 
-    <!-- Include the AJAX script for updating the header dynamically -->
+    
     <script>
         // Function to update the header content
         function updateHeader() {

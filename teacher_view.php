@@ -7,7 +7,7 @@ include('header.php');
 
 // Check if the user is logged in as a teacher
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Teacher') {
-    // Redirect to an unauthorized access page or display an error message
+   
     header("Location: unauthorized.php");
     exit();
 }
@@ -16,11 +16,12 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Teacher') {
 $teacherID = $_SESSION['userid'];
 
 // Fetch the lab ID associated with the teacher
+
 $sqlLabID = "SELECT LabID FROM Lab WHERE TeacherID = $teacherID";
 $resultLabID = $conn->query($sqlLabID);
 
 if ($resultLabID === false || $resultLabID->num_rows === 0) {
-    // Handle the case where the teacher is not associated with any lab
+   
     echo "<div class='alert alert-danger'>Error fetching lab information for the teacher.</div>";
 } else {
     $rowLabID = $resultLabID->fetch_assoc();

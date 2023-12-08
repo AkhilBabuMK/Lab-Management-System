@@ -2,12 +2,12 @@
 // Start or resume the session
 session_start();
 
-// Include the database connection and other necessary files
+
 include('header.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['userid'])) {
-    // Redirect to a login page or display an error message
+
     header("Location: login.php");
     exit();
 }
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $difficultyLevel = $_POST['difficultyLevel'];
     $questionNumber = $_POST['questionNumber']; // Add this line to get question number from the form
 
-    // Validate and sanitize input as needed
+    
 
     // Perform the question insertion/update in the database
     $labID = $_SESSION['labid'];
@@ -78,7 +78,7 @@ if (isset($_GET['editquestionid'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add/Edit Question</title>
-    <!-- Include any necessary CSS styles or Bootstrap CDN links here -->
+    
 </head>
 <body>
 
@@ -113,7 +113,7 @@ if (isset($_GET['editquestionid'])) {
             <label for="questionNumber">Question Number:</label>
             <input type="text" class="form-control" name="questionNumber" value="<?php echo isset($editQuestionNumber) ? $editQuestionNumber : ''; ?>" required>
         </div>
-        <!-- Add other form fields as needed -->
+      
 
         <button type="submit" class="btn btn-primary"><?php echo isset($_GET['editquestionid']) ? 'Update' : 'Submit'; ?> Question</button>
     </form>
@@ -122,7 +122,7 @@ if (isset($_GET['editquestionid'])) {
     
 </div>
 
-<!-- Include any necessary JavaScript scripts or Bootstrap JS CDN links here -->
+
 
 <?php include('footer.php'); ?>
 </body>
