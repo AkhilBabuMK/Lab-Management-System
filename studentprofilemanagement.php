@@ -30,9 +30,9 @@ $resultStudentDetails = $conn->query($sqlStudentDetails);
     if ($resultStudentDetails->num_rows > 0) {
         $studentDetails = $resultStudentDetails->fetch_assoc();
         ?>
-        <h2>Welcome, <?= $studentDetails['FullName'] ?>!</h2>
+        <!-- <h2>Welcome, <?= $studentDetails['FullName'] ?>!</h2>
         <h3>Your Details:</h3>
-        <p>Student ID: <?= $studentDetails['UserID'] ?></p>
+        <p>Student ID: <?= $studentDetails['UserID'] ?></p> -->
         <!-- Add other student details as needed -->
     <?php } else { ?>
         <div class="alert alert-danger">Error fetching student details.</div>

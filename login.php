@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     break;
                 case 'Student':
                     // Redirect student to studentprofile.php
-                    header("Location: student_profile.php");
+                    header("Location:studentprofilemanagement.php");
                     exit();
                     break;
                 case 'Admin':

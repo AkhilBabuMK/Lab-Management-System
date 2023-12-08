@@ -25,12 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // If not already enrolled, perform the enrollment
             $enrollSql = "INSERT INTO StudentLab (StudentID, LabID) VALUES ($studentID, $labIDToEnroll)";
             if ($conn->query($enrollSql) === TRUE) {
-                echo '<div class="container mt-5 alert alert-success">Lab enrolled successfully!</div>';
+                $enrollMessage = "Lab enrolled successfully!";
             } else {
-                echo '<div class="container mt-5 alert alert-danger">Error enrolling in the lab: ' . $conn->error . '</div>';
+                $enrollMessage = "Error enrolling in the lab: " . $conn->error;
             }
         } else {
-            echo '<div class="container mt-5 alert alert-warning">You are already enrolled in this lab.</div>';
+            $enrollMessage = "You are already enrolled in this lab.";
         }
     }
 
@@ -42,9 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Perform unenrollment
         $unenrollSql = "DELETE FROM StudentLab WHERE StudentID = $studentID AND LabID = $labIDToUnenroll";
         if ($conn->query($unenrollSql) === TRUE) {
-            echo '<div class="container mt-5 alert alert-success">Lab unenrolled successfully!</div>';
+            $unenrollMessage = "Lab unenrolled successfully!";
         } else {
-            echo '<div class="container mt-5 alert alert-danger">Error unenrolling from the lab: ' . $conn->error . '</div>';
+            $unenrollMessage = "Error unenrolling from the lab: " . $conn->error;
         }
     }
 }
@@ -52,53 +52,105 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // Fetch the available labs for enrollment
 $sql = "SELECT * FROM Lab";
 $result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    echo '<div class="container mt-5">';
-    echo '<h2>Available Labs for Enrollment</h2>';
-
-    while ($row = $result->fetch_assoc()) {
-        echo '<div class="card mt-3">';
-        echo '<div class="card-body">';
-        echo '<h5 class="card-title">Lab ID: ' . $row['LabID'] . '</h5>';
-        echo '<p class="card-text">Lab Name: ' . $row['LabName'] . '</p>';
-
-        // Add enroll button
-        echo '<form method="POST" action="student_profile.php">';
-        echo '<input type="hidden" name="enrollLab" value="' . $row['LabID'] . '">';
-        echo '<button type="button" class="btn btn-success" onclick="confirmAction(\'enroll\')">Enroll Lab</button>';
-        echo '<input type="hidden" name="confirmEnroll" id="confirmEnroll" value="">';
-        echo '</form>';
-
-        // Add unenroll button
-        echo '<form method="POST" action="student_profile.php">';
-        echo '<input type="hidden" name="unenrollLab" value="' . $row['LabID'] . '">';
-        echo '<button type="button" class="btn btn-danger" onclick="confirmAction(\'unenroll\')">Unenroll Lab</button>';
-        echo '<input type="hidden" name="confirmUnenroll" id="confirmUnenroll" value="">';
-        echo '</form>';
-
-        echo '</div>';
-        echo '</div>';
-    }
-
-    echo '</div>';
-} else {
-    echo '<div class="container mt-5 alert alert-info">No labs available for enrollment.</div>';
-}
-
-include('footer.php');
 ?>
-<script>
-    function confirmAction(action) {
-        var confirmation = confirm("Are you sure you want to " + action + " in the lab?");
-        if (confirmation) {
-            if (action === 'enroll') {
-                document.getElementById('confirmEnroll').value = '1';
-            } else if (action === 'unenroll') {
-                document.getElementById('confirmUnenroll').value = '1';
-            }
-            // Submit the form
-            event.target.form.submit();
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
         }
-    }
-</script>
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .lab-card {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2 class="mt-5 mb-4">Available Labs for Enrollment</h2>
+
+        <?php
+        while ($row = $result->fetch_assoc()) {
+            $isEnrolled = false;
+            $labID = $row['LabID'];
+
+            // Check if the student is already enrolled in the lab
+            $checkEnrollmentSql = "SELECT * FROM StudentLab WHERE StudentID = {$_SESSION['userid']} AND LabID = $labID";
+            $resultCheckEnrollment = $conn->query($checkEnrollmentSql);
+
+            if ($resultCheckEnrollment->num_rows > 0) {
+                $isEnrolled = true;
+            }
+        ?>
+
+            <div class="card lab-card">
+                <div class="card-body">
+                    <h5 class="card-title">Lab ID: <?= $row['LabID'] ?></h5>
+                    <p class="card-text">Lab Name: <?= $row['LabName'] ?></p>
+
+                    <?php if ($isEnrolled) { ?>
+                        <button class="btn btn-danger" disabled>Enrolled</button>
+                        <form class="d-inline" method="POST" action="student_profile.php">
+                            <input type="hidden" name="unenrollLab" value="<?= $row['LabID'] ?>">
+                            <button type="button" class="btn btn-warning" onclick="confirmAction('unenroll')">Unenroll Lab</button>
+                            <input type="hidden" name="confirmUnenroll" id="confirmUnenroll" value="">
+                        </form>
+                    <?php } else { ?>
+                        <form class="d-inline" method="POST" action="student_profile.php">
+                            <input type="hidden" name="enrollLab" value="<?= $row['LabID'] ?>">
+                            <button type="button" class="btn btn-success" onclick="confirmAction('enroll')">Enroll Lab</button>
+                            <input type="hidden" name="confirmEnroll" id="confirmEnroll" value="">
+                        </form>
+                    <?php } ?>
+                </div>
+            </div>
+
+        <?php } ?>
+
+        <?php
+        if (isset($enrollMessage)) {
+            echo '<div class="alert alert-success mt-4">' . $enrollMessage . '</div>';
+        }
+
+        if (isset($unenrollMessage)) {
+            echo '<div class="alert alert-success mt-4">' . $unenrollMessage . '</div>';
+        }
+
+        if ($result->num_rows === 0) {
+            echo '<div class="alert alert-info mt-4">No labs available for enrollment.</div>';
+        }
+        ?>
+    </div>
+
+    <script>
+        function confirmAction(action) {
+            var confirmation = confirm("Are you sure you want to " + action + " in the lab?");
+            if (confirmation) {
+                if (action === 'enroll') {
+                    document.getElementById('confirmEnroll').value = '1';
+                } else if (action === 'unenroll') {
+                    document.getElementById('confirmUnenroll').value = '1';
+                }
+                // Submit the form
+                event.target.form.submit();
+            }
+        }
+    </script>
+
+    <?php include('footer.php'); ?>
+</body>
+
+</html>

@@ -8,6 +8,7 @@ $database = "labmanagement";
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
 
+
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -16,10 +17,10 @@ if ($conn->connect_error) {
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head c>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Website Title</title>
+    <title>Lab Management System</title>
     <!-- Add your stylesheet links, meta tags, or other head elements here -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Add your JavaScript links or other head elements here -->
@@ -30,12 +31,23 @@ if ($conn->connect_error) {
 </head>
 <body>
 
-<header>
-    <div id="logo">
-        <img src="path/to/your/logo.png" alt="Your Logo">
+<header class="container-fluid bg-dark text-white py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="text-white">Lab Management System</h1>
+            </div>
+            <div class="col-md-6 text-right">
+                <!-- Add your login information or any other right-aligned content here -->
+                <p class="mb-0">Welcome,  </p>
+                <p class="small">Last Login: [Date & Time]</p>
+                
+                
+            <br>
+            </div>
+            
+        </div>
     </div>
-    <h1>Your Website Title</h1>
-    <!-- Add your navigation menu or other header content here -->
 </header>
 
 <main>
