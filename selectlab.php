@@ -45,8 +45,6 @@ if (!isset($_SESSION['username'])) {
 
 
 
-// Include the database connection or any necessary configuration files
-// require_once('config.php');
 
 // Fetch LabIDs associated with the logged-in teacher
 $teacherID = $_SESSION['userid']; // Assuming TeacherID is stored in the session as userID
@@ -177,7 +175,6 @@ if (isset($_SESSION['labid'])) {
 ?>
 </div>
 
-<!-- Include Bootstrap JS and jQuery CDN links here if needed -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

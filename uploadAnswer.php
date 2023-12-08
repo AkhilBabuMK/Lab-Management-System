@@ -2,20 +2,20 @@
 session_start();
 include('header.php');
 
-// Enable error reporting
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Check if the user is logged in as a student
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Student') {
-    // Redirect to an unauthorized access page or display an error message
+    
     header("Location: unauthorized.php");
     exit();
 }
 
 // Check if LabID and QuestionID are provided in the POST data
 if (!isset($_POST['labID'], $_POST['questionID'])) {
-    // Redirect or display an error message if LabID or QuestionID is not provided
+    
     header("Location: unauthorized.php");
     exit();
 }

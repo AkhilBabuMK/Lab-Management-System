@@ -4,12 +4,12 @@ include('header.php');
 
 // Check if the user is logged in as a student
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Student') {
-    // Redirect to an unauthorized access page or display an error message
-    header("Location: unauthorized.php");
+    //if the student is not loged in move to unauthorized page
+    header("Location: unauthorized.php"); 
     exit();
 }
 
-// Check if LabID is provided in the URL
+// Check if LabID is provided in the URL ie(collected when button pressed or similar action)
 if (!isset($_GET['labID'])) {
     // Redirect or display an error message if LabID is not provided
     header("Location: unauthorized.php");
