@@ -56,9 +56,9 @@ if (isset($_SESSION['userid'])) {
 </head>
 <body>
 
-<header class="container-fluid bg-dark text-white py-3">
+<header class="container-fluid bg-dark text-white py-2">
     <div class="container">
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-md-6">
                 <h1 class="text-white">Lab Management System</h1>
             </div>
@@ -66,11 +66,11 @@ if (isset($_SESSION['userid'])) {
                 <!-- Add your login information or any other right-aligned content here -->
                 <p class="mb-0" id="welcomeMessage">Welcome, <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest'; ?></p>
                 <p class="small" id="lastLoginMessage">Last Login: <?php echo $lastLoginTime; ?></p>
-                <br>
             </div>
         </div>
     </div>
 </header>
+
 
 <main>
     <!-- Your main content goes here -->
@@ -99,5 +99,5 @@ if (isset($_SESSION['userid'])) {
             updateHeader();
         });
     </script>
-</main>
+
 

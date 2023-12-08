@@ -172,6 +172,7 @@ if (isset($_SESSION['labid'])) {
     
 
     echo "</div>";
+    
 }
 ?>
 </div>

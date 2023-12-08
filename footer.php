@@ -1,9 +1,7 @@
-</main>
-
-<footer class="bg-light p-3 mt-4">
+<footer class="bg-light  mt-2">
     <div class="container">
-        <!-- Your footer content goes here -->
-        <p class="text-muted">&copy; <?php echo date("Y"); ?> Your Website Name. All rights reserved.</p>
+        <hr class="my-2">
+        <p class="text-center text-muted mb-0">&copy; <?php echo date("Y"); ?> Lab Management System. All rights reserved.</p>
     </div>
 </footer>
 
@@ -20,4 +18,3 @@ if (isset($conn)) {
     $conn->close();
 }
 ?>
-

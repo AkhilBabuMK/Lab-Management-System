@@ -101,7 +101,9 @@ $resultStudentDetails = $conn->query($sqlStudentDetails);
 
 </body>
 </html>
-
+<div style="height: 200px;">
+    
+</div>
 <?php
 include('footer.php');
 ?>
