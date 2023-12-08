@@ -29,4 +29,4 @@ The College Lab Management System is designed to facilitate the management of co
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/college-lab-management-system.git
+   git@github.com:AkhilBabuMK/Lab-Management-System.git
