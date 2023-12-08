@@ -8,8 +8,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
     // Perform SQL query to check login credentials
-    $sql = "SELECT * FROM Users WHERE Username='$username'";
-    $result = $conn->query($sql);
+    $sql = "SELECT * FROM Users WHERE Username=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     // Check if a matching user is found
     if ($result->num_rows > 0) {
@@ -26,16 +29,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['fullname'] = $row['FullName'];
             $_SESSION['role'] = $row['Role'];
 
+            // Insert session record
+            $insertSession = "INSERT INTO Session (UserID, LoginTime) VALUES (?, NOW())";
+            $stmtInsertSession = $conn->prepare($insertSession);
+            $stmtInsertSession->bind_param('i', $_SESSION['userid']);
+            $stmtInsertSession->execute();
+            $stmtInsertSession->close();
+
             // Redirect based on user role
             switch ($_SESSION['role']) {
                 case 'Teacher':
-                    // Redirect teacher to select lab.php
+                    // Redirect teacher to selectlab.php
                     header("Location: selectlab.php");
                     exit();
                     break;
                 case 'Student':
                     // Redirect student to studentprofile.php
-                    header("Location:studentprofilemanagement.php");
+                    header("Location: studentprofilemanagement.php");
                     exit();
                     break;
                 case 'Admin':
@@ -56,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Close the database connection
+    $stmt->close();
     $conn->close();
 }
 
